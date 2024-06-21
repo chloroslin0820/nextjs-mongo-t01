@@ -9,7 +9,8 @@ export const POST = async (req, res) => {
 
         const existingUser = await User.findOne({ email });
         if(existingUser) {
-            return new Response("User already exists", {
+            return new Response(
+                JSON.stringify({ message: "User already exists" }), {
                 status: 400,
             });
         }
@@ -24,7 +25,7 @@ export const POST = async (req, res) => {
 
         await newUser.save();
 
-        return new Response(JSON.stringify(newuser), {
+        return new Response(JSON.stringify(newUser), {
             status: 200,
         });
 

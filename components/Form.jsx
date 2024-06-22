@@ -5,6 +5,7 @@ import {
   LockOutlined,
   PersonOutline,
 } from "@mui/icons-material";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -47,6 +48,25 @@ const Form = ({ type }) => {
       } catch (error) {
         console.error("Error submitting form:", error);
         toast.error("Failed to submit form");
+      }
+    }
+
+    if (type === "login") {
+      try {
+        const res = await signIn("credentials", {
+          ...data,
+          redirect: false,
+        });
+
+        if (res.ok) {
+          router.push("/chats");
+        } else if (res.error === "Invalid password") {
+          toast.error("Incorrect password. Please try again.");
+        } else {
+          toast.error("Email not verified. Please verify your email address.");
+        }
+      } catch (error) {
+        toast.error("Failed to login.");
       }
     }
   };
@@ -112,13 +132,12 @@ const Form = ({ type }) => {
                   required: "Password is required",
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters",
+                    message: "Password must be at least 8 characters long",
                   },
                   pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+]{8,}$/,
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/,
                     message:
-                      "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+                      "Password contains only alphanumericals, at least 1 upper and lowercase letter, one number.",
                   },
                 })}
                 type="password"

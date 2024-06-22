@@ -1,3 +1,4 @@
+import Provider from "@components/Provider";
 import ToasterContent from "@components/ToasterContent";
 import { Inter } from "next/font/google";
 
@@ -12,8 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-purple-1`}>
-        <ToasterContent />
-        {children}
+        <Provider>
+          <ToasterContent />
+          {children}
+        </Provider>
       </body>
     </html>
   );

@@ -7,8 +7,6 @@ const Chats = () => {
 
   if (!session) {
     return <div>Loading...</div>;
-  } else {
-    console.log(session);
   }
 
   return <div>{session && <p>User Email: {session.user.email}</p>}</div>;

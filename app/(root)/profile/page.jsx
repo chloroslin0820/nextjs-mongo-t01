@@ -75,11 +75,6 @@ const Profile = () => {
           <input
             {...register("username", {
               required: "Username is required",
-              pattern: {
-                value: /^[a-zA-Z0-9_.]+$/,
-                message:
-                  "Username can only contain letters, numbers, underscores, and dots",
-              },
             })}
             type="text"
             className="input-field"

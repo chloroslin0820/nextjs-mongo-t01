@@ -84,11 +84,6 @@ const Form = ({ type }) => {
                   defaultValue=""
                   {...register("username", {
                     required: "Username is required",
-                    pattern: {
-                      value: /^[a-zA-Z0-9_.]+$/,
-                      message:
-                        "Username can only contain letters, numbers, underscores, and dots",
-                    },
                   })}
                   type="text"
                   placeholder="Username"

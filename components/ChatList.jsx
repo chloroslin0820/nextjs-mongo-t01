@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ChatBox from "./ChatBox";
 import Loader from "./Loader";
 
-const ChatList = () => {
+const ChatList = ({ currentChatId }) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
 
@@ -53,7 +53,12 @@ const ChatList = () => {
 
       <div className="chats">
         {chats?.map((chat, index) => (
-          <ChatBox chat={chat} key={index} currentUser={currentUser} />
+          <ChatBox
+            chat={chat}
+            key={index}
+            currentUser={currentUser}
+            currentChatId={currentChatId}
+          />
         ))}
       </div>
     </div>

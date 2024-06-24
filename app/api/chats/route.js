@@ -21,11 +21,14 @@ export async function POST(req) {
 
       await chat.save();
 
-      await User.findByIdAndUpdate(
-        currentUserId,
-        { $addToSet: { chats: chat._id } },
-        { new: true }
-      );
+      const updateAllMembers = chat.members.map(async (memberId) => {
+        await User.findByIdAndUpdate(
+          memberId,
+          { $addToSet: { chats: chat._id } },
+          { new: true }
+        );
+      });
+      Promise.all(updateAllMembers);
     }
     return new Response(JSON.stringify(chat), { status: 200 });
   } catch (error) {

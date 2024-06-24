@@ -2,6 +2,7 @@
 
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 
@@ -54,6 +55,27 @@ const Contacts = () => {
 
   // add group chat name
   const [name, setName] = useState("");
+
+  const router = useRouter();
+
+  // create chat
+  const createChat = async () => {
+    const res = await fetch("/api/chats", {
+      method: "POST",
+      body: JSON.stringify({
+        currentUserId: currentUser._id,
+        members: selectedContacts.map((contact) => contact._id),
+        isGroup,
+        name,
+      }),
+    });
+
+    const chat = await res.json();
+
+    if (res.ok) {
+      router.push(`/chats/${chat._id}`);
+    }
+  };
 
   return loading ? (
     <Loader />
@@ -115,7 +137,9 @@ const Contacts = () => {
               </div>
             </>
           )}
-          <button className="btn">START A NEW CHAT</button>
+          <button className="btn" onClick={createChat}>
+            START A NEW CHAT
+          </button>
         </div>
       </div>
     </div>

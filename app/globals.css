@@ -32,6 +32,10 @@
 }
 
 .input-field {
+  @apply w-[300px] max-sm:w-full bg-transparent outline-none;
+}
+
+.message-input-field {
   @apply w-[680px] max-xl:w-[500px] max-lg:w-[560px] max-md:w-[440px] max-sm:w-3/5 bg-transparent outline-none;
 }
 

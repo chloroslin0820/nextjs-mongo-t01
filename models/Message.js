@@ -21,7 +21,7 @@ const MessageSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  sendBy: {
+  seenBy: {
     type: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +33,6 @@ const MessageSchema = new mongoose.Schema({
 });
 
 const Message =
-  mongoose.models.Chat || mongoose.model("Message", MessageSchema);
+  mongoose.models.Message || mongoose.model("Message", MessageSchema);
 
 export default Message;

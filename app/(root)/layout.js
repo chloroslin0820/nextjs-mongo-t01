@@ -1,3 +1,4 @@
+import BottomBar from "@components/BottomBar";
 import Provider from "@components/Provider";
 import Topbar from "@components/Topbar";
 import { Inter } from "next/font/google";
@@ -17,6 +18,7 @@ export default async function RootLayout({ children }) {
         <Provider>
           <Topbar />
           {children}
+          <BottomBar />
         </Provider>
       </body>
     </html>

@@ -104,6 +104,7 @@ const ChatDetails = ({ chatId }) => {
   return loading ? (
     <Loader />
   ) : (
+    // <div className="py-20">
     <div className="chat-details">
       <div className="chat-header">
         {chat?.isGroup ? (
@@ -180,6 +181,7 @@ const ChatDetails = ({ chatId }) => {
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 

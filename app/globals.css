@@ -62,7 +62,7 @@
 }
 
 .profilePhoto {
-  @apply w-11 h-11 rounded-full object-cover object-center;
+  @apply w-11 h-11 rounded-full object-cover object-center overflow-hidden;
 }
 
 /* Bottom Bar */
@@ -89,7 +89,7 @@
 
 /* Chat List */
 .chat-list {
-  @apply h-screen flex flex-col gap-5 pb-20;
+  @apply flex flex-col gap-5 pb-20;
 }
 
 .input-search {
@@ -110,11 +110,11 @@
 }
 
 .chat-info {
-  @apply flex;
+  @apply flex gap-3;
 }
 
 .last-message {
-  @apply w-[120px] sm:w-[250px] truncate;
+  @apply w-[80px] lg:w-[140px] xl:w-[180px] truncate;
 }
 
 /* Contacts */
@@ -199,6 +199,6 @@
 }
 
 /* BottomBar */
-.bottombar {
-  @apply bottom-0 sticky px-10 py-5 flex items-center justify-between sm:hidden;
+.bottomBar {
+  @apply bottom-0 sticky px-10 py-5 flex items-center justify-between sm:hidden bg-white mt-10;
 }

@@ -29,6 +29,11 @@ export async function POST(req) {
         );
       });
       Promise.all(updateAllMembers);
+
+      /* Trigger a Pusher event for each member to notify a new chat */
+      chat.members.map(async (member) => {
+        await pusherServer.trigger(member._id.toString(), "new-chat", chat);
+      });
     }
     return new Response(JSON.stringify(chat), { status: 200 });
   } catch (error) {

@@ -1,10 +1,11 @@
 "use client";
 
+import { pusherClient } from "@lib/pusher";
 import { AddPhotoAlternate } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
 import { CldUploadButton } from "next-cloudinary";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loader from "./Loader";
 import MessageBox from "./MessageBox";
 
@@ -20,7 +21,6 @@ const ChatDetails = ({ chatId }) => {
     try {
       const res = await fetch(`/api/chats/${chatId}`);
       const data = await res.json();
-      console.log("chat:", data);
       setChat(data);
       setOtherMembers(
         data?.members?.filter((member) => member._id !== currentUser._id)
@@ -52,7 +52,6 @@ const ChatDetails = ({ chatId }) => {
 
       if (res.ok) {
         setText("");
-        getChatDetails();
       }
     } catch (error) {
       console.log(error);
@@ -72,14 +71,35 @@ const ChatDetails = ({ chatId }) => {
           photo: result?.info?.secure_url,
         }),
       });
-
-      if (res.ok) {
-        getChatDetails();
-      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    pusherClient.subscribe("chatId");
+
+    const handleMessage = (newMessage) => {
+      setChat((prev) => ({
+        ...prev,
+        messages: [...prev.messages, newMessage],
+      }));
+    };
+
+    pusherClient.bind("newMessage", handleMessage);
+
+    return () => {
+      pusherClient.unsubscribe("chatId");
+      pusherClient.unbind("newMessage", handleMessage);
+    };
+  }, ["chatId"]);
+
+  //scrolling down to the bottom when new message is received
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat?.messages]);
 
   return loading ? (
     <Loader />
@@ -125,6 +145,7 @@ const ChatDetails = ({ chatId }) => {
             currentUser={currentUser}
           />
         ))}
+        <div ref={bottomRef} />
       </div>
 
       <div className="send-message">

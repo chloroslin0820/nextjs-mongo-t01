@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ChatBox from "./ChatBox";
 import Loader from "./Loader";
 
-const ChatList = ({ currentChatId }) => {
+const ChatList = ({ currentChatId, isChatDetailsUpdated }) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
 
@@ -36,10 +36,10 @@ const ChatList = ({ currentChatId }) => {
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser || isChatDetailsUpdated) {
       getChats();
     }
-  }, [currentUser, search]);
+  }, [currentUser, search, isChatDetailsUpdated]);
 
   useEffect(() => {
     if (currentUser) {

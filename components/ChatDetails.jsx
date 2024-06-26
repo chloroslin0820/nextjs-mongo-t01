@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import Loader from "./Loader";
 import MessageBox from "./MessageBox";
 
-const ChatDetails = ({ chatId }) => {
+const ChatDetails = ({ chatId, updateChatDetails }) => {
   const [loading, setLoading] = useState(true);
   const [chat, setChat] = useState({});
   const [otherMembers, setOtherMembers] = useState([]);
@@ -52,6 +52,10 @@ const ChatDetails = ({ chatId }) => {
 
       if (res.ok) {
         setText("");
+      } else {
+        await getChatDetails();
+        setText("");
+        updateChatDetails();
       }
     } catch (error) {
       console.log(error);

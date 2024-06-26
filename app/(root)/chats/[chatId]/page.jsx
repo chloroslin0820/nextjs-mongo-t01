@@ -4,7 +4,7 @@ import ChatDetails from "@components/ChatDetails";
 import ChatList from "@components/ChatList";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ChatPage = () => {
   const { chatId } = useParams();
@@ -23,6 +23,7 @@ const ChatPage = () => {
       console.log(error);
     }
   };
+  const [isChatDetailsUpdated, setIsChatDetailsUpdated] = useState(false);
 
   useEffect(() => {
     if (currentUser && chatId) {
@@ -30,13 +31,20 @@ const ChatPage = () => {
     }
   }, [currentUser, chatId]);
 
+  const updateChatDetails = () => {
+    setIsChatDetailsUpdated((prev) => !prev);
+  };
+
   return (
     <div className="main-container">
       <div className="w-1/3 max-lg:hidden">
-        <ChatList currentChatId={chatId} />
+        <ChatList
+          currentChatId={chatId}
+          isChatDetailsUpdated={isChatDetailsUpdated}
+        />
       </div>
       <div className="w-2/3 max-lg:w-full">
-        <ChatDetails chatId={chatId} />
+        <ChatDetails chatId={chatId} updateChatDetails={updateChatDetails} />
       </div>
     </div>
   );

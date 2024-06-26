@@ -8,6 +8,7 @@ const MessageBox = ({ message, currentUser }) => {
         alt="profile photo"
         className="message-profilePhoto"
       />
+
       <div className="message-info">
         <p className="text-small-bold">
           {message?.sender?.username} &#160; &#183; &#160;{" "}

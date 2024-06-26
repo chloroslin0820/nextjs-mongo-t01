@@ -110,7 +110,7 @@
 }
 
 .chat-info {
-  @apply flex gap-3;
+  @apply flex;
 }
 
 .last-message {
@@ -162,11 +162,11 @@
 }
 
 .message-box {
-  @apply flex gap-3 items-start;
+  @apply flex gap-3;
 }
 
 .message-profilePhoto {
-  @apply w-8 h-8 rounded-full;
+  @apply w-10 h-10 rounded-full object-cover;
 }
 
 .message-info {
